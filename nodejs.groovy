@@ -9,10 +9,20 @@ job('NodeJS example') { // Job NAME
         scm('H/5 * * * *')
     }
     wrappers {
-        nodejs('nodejs') // this is the name of the NodeJS installation in 
+         // this is the name of the NodeJS installation in nodejs('nodejs')
                          // Manage Jenkins -> Configure Tools -> NodeJS Installations -> Name
     }
     steps { // what steps to take 
-        shell("npm install")
+        dockerBuildAndPublish {
+            repositoryName('https://github.com/tamerIbraheem/docker-cicd')
+            tag('${GIT_REVISION,length=9}')
+            buildContext('./basics')
+            registryCredentials('tamer-dockerhub')
+            forcePull(false)
+            forceTag(false)
+            createFingerprints(false)
+            skipDecorate()
+        }
+
     }
 }
