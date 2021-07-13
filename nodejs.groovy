@@ -14,7 +14,7 @@ job('NodeJS example') { // Job NAME
     }
     steps { // what steps to take 
         dockerBuildAndPublish {
-            repositoryName('https://github.com/tameribraheem/docker-cicd')
+            repositoryName('tamerib/nodejs-app')
             tag('${GIT_REVISION,length=9}')
             buildContext('./basics')
             registryCredentials('tamer-dockerhub')
